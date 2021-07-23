@@ -1,4 +1,4 @@
-## Python for Reference
+## Threading in Python
 
 **I had recently began Python tutorial and so this project is for reference.**
 
