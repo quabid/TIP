@@ -1,9 +1,15 @@
 import requests
 from urllib.parse import urlparse, urlunparse, urlsplit, urlunsplit, urljoin
+from custom_modules.DialogMessenger import MESSENGER_SWITCH
 
-# https: // www.youtube.com/results?search_query = wingsuits
+# https://www.youtube.com/results?search_query=wingsuits
 # https: // youtu.be/-DCkuvC28mE
 # https: // jsonplaceholder.typicode.com/todos
+# https: // jsonplaceholder.typicode.com/posts
+# https: // jsonplaceholder.typicode.com/comments
+# https: // jsonplaceholder.typicode.com/photos
+# https: // jsonplaceholder.typicode.com/albums
+
 
 
 class WebSearcher:
@@ -25,16 +31,20 @@ class WebSearcher:
 
     def make_request(this, method='get', data=None):
         req = this.REQUEST_METHODS[method]
-        if method == 'get':
-            return req(this.url)
-        elif method == 'delete':
-            return req(this.url)
-        elif method == 'head':
-            return req(this.url)
-        elif method == 'options':
-            return req(this.url)
-        else:
-            return req(this.url, data)
+        try:
+            if method == 'get':
+                return {'status':True,'data':req(this.url)}
+            elif method == 'delete':
+                return {'status':True,'data':req(this.url)}
+            elif method == 'head':
+                return {'status':True,'data':req(this.url)}
+            elif method == 'options':
+                return {'status':True,'data':req(this.url)}
+            else:
+                return {'status':True,'data':req(this.url, data)}
+        except requests.exceptions.MissingSchema as ms:
+            print(ms)            
+            return {'error':ms,'status':False}
 
     def display(this):
         if this.url != None:

@@ -19,13 +19,13 @@ search_entry_var = StringVar()
 def search(arg):
     if arg:
         ws = WebSearcher(arg)
-        # print("\n\n\t\t\tArgument:\t\t{}".format(arg))
         response = ws.make_request('get')
 
-        if response.status_code == 200:
-            return response.text
-        else:
-            return None
+        if response:
+            if response['status']:
+                return response
+            else:
+                return None
 
     else:
         message = STATUS_MESSENGER['error']("Missing argument")
@@ -34,22 +34,20 @@ def search(arg):
 
 
 def init_thread():
+
     que = Queue()
 
     search_thread = Thread(target=lambda q, args1: q.put(
         search(args1)), args=(que, search_entry_var.get()))
-
     search_thread.setName('search thread'.title())
-
-    # print("\t\t\tSeparate Thread: {}".format(search_thread.getName()))
-
     search_thread.start()
     search_thread = None
 
     result = que.get()
 
     if result:
-        print("\n\n\t\t\tResults:\t\t{}\n\n".format(result))
+        if result['status']:
+            print("\n\n\t\t\tResults:\t\t{}\n\n".format(result['data'].text))
 
 
 def button_search_handler(event):
@@ -57,8 +55,6 @@ def button_search_handler(event):
 
 
 def button_keyrelease_handler(event):
-    # print("{} KeyRelease Event\n\tKey Code: {}\n\tKey Name: {}\n".format(
-    #     event.widget, event.keycode, event.keysym))
     if event.keysym == 'space' or event.keycode == 65:
         init_thread()
 
@@ -72,8 +68,10 @@ def build_interface():
     search_frame = LabelFrame(root, text="url".upper())
     search_frame.grid(padx=19, pady=5)
 
+    h_scroller = Scrollbar(orient="horizontal")
+
     # Textfield
-    search_entry = Entry(search_frame, textvariable=search_entry_var, width=45, font=(
+    search_entry = Entry(search_frame, xscrollcommand=h_scroller.set, textvariable=search_entry_var, width=45, font=(
         "Helvetica", 12, 'normal'))
     search_entry.grid(ipady=5, pady=5, column=1, row=1)
     search_entry.bind('<FocusIn>', clear_entry_on_focusin)
