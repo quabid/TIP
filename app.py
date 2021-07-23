@@ -18,7 +18,7 @@ search_entry_var = StringVar()
 
 def get_video(arg):
     if arg:
-        print("\n\n\t\t\tArgument:\t\t{}\n\n".format(arg))
+        print("\n\n\t\t\tArgument:\t\t{}".format(arg))
     else:
         message = STATUS_MESSENGER['error']("Missing argument")
         print("\t\t{}\n\n".format(message))
@@ -34,13 +34,13 @@ def button_search_handler(event):
 
     video_thread.setName('video thread'.title())
 
-    print("Running thread {}\n\n".format(video_thread.getName()))
+    print("\t\t\tRunning thread {}".format(video_thread.getName()))
 
     video_thread.start()
     video_thread = None
 
     result = que.get()
-    print("\n\t\tResults:\t\t{}\n\n".format(result))
+    print("\t\t\tResults:\t\t{}\n\n".format(result))
 
 
 def clear_entry_on_click(event):
@@ -55,7 +55,7 @@ search_frame.grid(padx=19, pady=5)
 search_entry = Entry(search_frame, textvariable=search_entry_var, width=45, font=(
     "Helvetica", 12, 'normal'))
 search_entry.grid(ipady=5, pady=5, column=1, row=1)
-search_entry.bind('<ButtonRelease>', clear_entry_on_click)
+search_entry.bind('<FocusIn>', clear_entry_on_click)
 
 # Button
 search_button = Button(search_frame, text="Search",
