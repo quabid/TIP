@@ -45,7 +45,7 @@ def button_search_handler(event):
         print("\t\t\tResults:\t\t{}\n\n".format(result))
 
 
-def clear_entry_on_click(event):
+def clear_entry_on_focusin(event):
     search_entry_var.set("")
 
 
@@ -57,7 +57,7 @@ search_frame.grid(padx=19, pady=5)
 search_entry = Entry(search_frame, textvariable=search_entry_var, width=45, font=(
     "Helvetica", 12, 'normal'))
 search_entry.grid(ipady=5, pady=5, column=1, row=1)
-search_entry.bind('<FocusIn>', clear_entry_on_click)
+search_entry.bind('<FocusIn>', clear_entry_on_focusin)
 
 # Button
 search_button = Button(search_frame, text="Search",
