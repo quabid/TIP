@@ -3,12 +3,12 @@ from urllib.parse import urlparse, urlunparse, urlsplit, urlunsplit, urljoin
 from custom_modules.DialogMessenger import MESSENGER_SWITCH
 
 # https://www.youtube.com/results?search_query=wingsuits
-# https: // youtu.be/-DCkuvC28mE
-# https: // jsonplaceholder.typicode.com/todos
-# https: // jsonplaceholder.typicode.com/posts
-# https: // jsonplaceholder.typicode.com/comments
-# https: // jsonplaceholder.typicode.com/photos
-# https: // jsonplaceholder.typicode.com/albums
+# https://youtu.be/-DCkuvC28mE
+# https://jsonplaceholder.typicode.com/todos
+# https://jsonplaceholder.typicode.com/posts
+# https://jsonplaceholder.typicode.com/comments
+# https://jsonplaceholder.typicode.com/photos
+# https://jsonplaceholder.typicode.com/albums
 
 
 class WebSearcher:
@@ -47,6 +47,9 @@ class WebSearcher:
         except requests.exceptions.InvalidURL as iu:
             print(iu)
             return {'error': iu, 'status': False}
+        except requests.exceptions.InvalidSchema as ins:
+            print(ins)
+            return {'error': ins, 'status': False}
 
     def display(this):
         if this.url != None:
