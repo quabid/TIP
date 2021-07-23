@@ -11,7 +11,6 @@ from custom_modules.DialogMessenger import MESSENGER_SWITCH
 # https: // jsonplaceholder.typicode.com/albums
 
 
-
 class WebSearcher:
     def __init__(this, url):
         this.url = url
@@ -33,18 +32,21 @@ class WebSearcher:
         req = this.REQUEST_METHODS[method]
         try:
             if method == 'get':
-                return {'status':True,'data':req(this.url)}
+                return {'status': True, 'data': req(this.url)}
             elif method == 'delete':
-                return {'status':True,'data':req(this.url)}
+                return {'status': True, 'data': req(this.url)}
             elif method == 'head':
-                return {'status':True,'data':req(this.url)}
+                return {'status': True, 'data': req(this.url)}
             elif method == 'options':
-                return {'status':True,'data':req(this.url)}
+                return {'status': True, 'data': req(this.url)}
             else:
-                return {'status':True,'data':req(this.url, data)}
+                return {'status': True, 'data': req(this.url, data)}
         except requests.exceptions.MissingSchema as ms:
-            print(ms)            
-            return {'error':ms,'status':False}
+            print(ms)
+            return {'error': ms, 'status': False}
+        except requests.exceptions.InvalidURL as iu:
+            print(iu)
+            return {'error': iu, 'status': False}
 
     def display(this):
         if this.url != None:
