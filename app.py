@@ -50,7 +50,8 @@ def button_search_handler(event):
 
 
 def button_keyrelease_handler(event):
-    print("Key Code: {}\nKey Name: {}".format(event.keycode, event.keysym))
+    print("{} KeyRelease Event\n\tKey Code: {}\n\tKey Name: {}\n".format(
+        event.widget, event.keycode, event.keysym))
     if event.keysym == 'space' or event.keycode == 65:
         init_thread()
 
@@ -59,25 +60,27 @@ def clear_entry_on_focusin(event):
     search_entry_var.set("")
 
 
-# Content pane
-search_frame = LabelFrame(root, text="url".upper())
-search_frame.grid(padx=19, pady=5)
+def build_interface():
+    # Content pane
+    search_frame = LabelFrame(root, text="url".upper())
+    search_frame.grid(padx=19, pady=5)
 
-# Textfield
-search_entry = Entry(search_frame, textvariable=search_entry_var, width=45, font=(
-    "Helvetica", 12, 'normal'))
-search_entry.grid(ipady=5, pady=5, column=1, row=1)
-search_entry.bind('<FocusIn>', clear_entry_on_focusin)
+    # Textfield
+    search_entry = Entry(search_frame, textvariable=search_entry_var, width=45, font=(
+        "Helvetica", 12, 'normal'))
+    search_entry.grid(ipady=5, pady=5, column=1, row=1)
+    search_entry.bind('<FocusIn>', clear_entry_on_focusin)
 
-# Button
-search_button = Button(search_frame, text="Search",
-                       font=("Helvetica", 12, 'bold'))
-search_button.grid(padx=5, ipady=1, column=2, row=1)
-search_button.bind('<ButtonRelease>', button_search_handler)
-search_button.bind('<KeyRelease>', button_keyrelease_handler)
+    # Button
+    search_button = Button(search_frame, text="Search",
+                           font=("Helvetica", 12, 'bold'))
+    search_button.grid(padx=5, ipady=1, column=2, row=1)
+    search_button.bind('<ButtonRelease>', button_search_handler)
+    search_button.bind('<KeyRelease>', button_keyrelease_handler)
 
 
 def create_gui():
+    build_interface()
     root.mainloop()
 
 
