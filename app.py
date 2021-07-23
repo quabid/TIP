@@ -21,7 +21,7 @@ def get_video(arg):
         print("\n\n\t\t\tArgument:\t\t{}".format(arg))
     else:
         message = STATUS_MESSENGER['error']("Missing argument")
-        print("\t\t{}\n\n".format(message))
+        print("\n\t\t\t{}\n\n".format(message))
 
     return arg.upper()
 
@@ -32,15 +32,17 @@ def button_search_handler(event):
     video_thread = Thread(target=lambda q, args1: q.put(
         get_video(args1)), args=(que, search_entry_var.get()))
 
-    video_thread.setName('video thread'.title())
+    video_thread.setName('video downloader thread'.title())
 
-    print("\t\t\tRunning thread {}".format(video_thread.getName()))
+    print("\t\t\tSeparate Thread: {}".format(video_thread.getName()))
 
     video_thread.start()
     video_thread = None
 
     result = que.get()
-    print("\t\t\tResults:\t\t{}\n\n".format(result))
+
+    if result:
+        print("\t\t\tResults:\t\t{}\n\n".format(result))
 
 
 def clear_entry_on_click(event):
