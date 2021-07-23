@@ -1,7 +1,7 @@
 from tkinter import *
 from threading import Thread
 from queue import Queue
-from custom_modules.index import window_event_handler, cls, STATUS_MESSENGER, MESSENGER_SWITCH
+from custom_modules.index import window_event_handler, cls, be, STATUS_MESSENGER, MESSENGER_SWITCH
 
 
 cls()
@@ -26,7 +26,7 @@ def get_video(arg):
     return arg.upper()
 
 
-def button_search_handler(event):
+def init_thread():
     que = Queue()
 
     video_thread = Thread(target=lambda q, args1: q.put(
@@ -43,6 +43,16 @@ def button_search_handler(event):
 
     if result:
         print("\t\t\tResults:\t\t{}\n\n".format(result))
+
+
+def button_search_handler(event):
+    init_thread()
+
+
+def button_keyrelease_handler(event):
+    print("Key Code: {}\nKey Name: {}".format(event.keycode, event.keysym))
+    if event.keysym == 'space' or event.keycode == 65:
+        init_thread()
 
 
 def clear_entry_on_focusin(event):
@@ -64,6 +74,7 @@ search_button = Button(search_frame, text="Search",
                        font=("Helvetica", 12, 'bold'))
 search_button.grid(padx=5, ipady=1, column=2, row=1)
 search_button.bind('<ButtonRelease>', button_search_handler)
+search_button.bind('<KeyRelease>', button_keyrelease_handler)
 
 
 def create_gui():
