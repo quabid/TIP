@@ -17,41 +17,20 @@ search_entry_var = StringVar()
 
 
 def search(arg):
-    results = None
-
     if arg:
         ws = WebSearcher(arg)
         # print("\n\n\t\t\tArgument:\t\t{}".format(arg))
         response = ws.make_request('get')
 
         if response.status_code == 200:
-            results = {'json': None, 'binary': None, 'text': None, 'raw': None}
+            return response.text
+        else:
+            return None
 
-            json = None
-            text = response.text
-            binary = response.content
-            raw = response.raw
-
-            try:
-                json = response.json()
-            except json.JSONDecodeError as je:
-                print(je)
-                return
-
-            results['json'] = json
-            results['text'] = text
-            results['binary'] = binary
-            results['raw'] = raw
-
-            if json:
-                print(json)
-            else:
-                print(binary)
     else:
         message = STATUS_MESSENGER['error']("Missing argument")
         print("\n\t\t\t{}\n\n".format(message))
-
-    return results
+        return None
 
 
 def init_thread():
