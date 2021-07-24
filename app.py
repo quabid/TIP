@@ -45,8 +45,7 @@ def init_thread():
 
     result = que.get()
 
-    if result:
-        print(result)
+    if result:        
         if result['status']:
             print("\n\n\t\t\tResults:\t\t{}\n\n".format(result['data'].text))
 
