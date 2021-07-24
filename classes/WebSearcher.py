@@ -50,6 +50,9 @@ class WebSearcher:
         except requests.exceptions.InvalidSchema as ins:
             print(ins)
             return {'error': ins, 'status': False}
+        except requests.exceptions.ConnectionError as ce:
+            print(ce)
+            return {'error': ce, 'status': False}
 
     def display(this):
         if this.url != None:
