@@ -1,7 +1,7 @@
 from tkinter import *
 from threading import Thread
 from queue import Queue
-from custom_modules.index import window_event_handler, cls, be, STATUS_MESSENGER, MESSENGER_SWITCH
+from custom_modules.index import window_event_handler, save, cls, be, STATUS_MESSENGER, MESSENGER_SWITCH
 from classes.index import WebSearcher
 
 cls()
@@ -14,6 +14,17 @@ window_event_handler(root)
 
 
 search_entry_var = StringVar()
+
+
+def save_error_message(arg):
+    function = MESSENGER_SWITCH['error']
+    function('save error'.title(), arg)
+
+
+def save_error_message_thread(arg):
+    save_error_thread = Thread(target=save_error_message, args=(arg,))
+    save_error_thread.start()
+    save_error_thread = None
 
 
 def search_error_message(arg):
@@ -51,7 +62,13 @@ def search_thread():
     result = que.get()
     if result:
         if result['status']:
-            print("\n\n\t\t\tResults:\t\t{}\n\n".format(result['data'].text))
+            content = result['data'].content
+            save_results = save(content, "results", ".json", "./downloads")
+            if save_results['status']:
+                import os
+                os.system('ls -halt downloads')
+            else:
+                save_error_message_thread(save_results['error'])
 
 
 def button_search_handler(event):
