@@ -20,9 +20,9 @@ def set_save_destination():
 
 
 def save_content_to_file_requirements(name="file", ext=".txt", destination=os.environ('HOME')):
-    file_name = set_file_name()
-    ext_name = set_ext_name()
-    dest_path = set_save_destination()
+    file_name = name
+    ext_name = ext
+    dest_path = destination
 
     if not file_name:
         file_name = set_file_name()
@@ -32,6 +32,5 @@ def save_content_to_file_requirements(name="file", ext=".txt", destination=os.en
 
     if not isDir(dest_path) or not dest_path:
         dest_path = set_save_destination()
-    
 
-    return "{}{}{}".format(dest_path, file_name, ext_name)
+    return "{}{}{}{}".format(dest_path, os.sep, file_name, ext_name)
