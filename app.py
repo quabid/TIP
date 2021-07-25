@@ -17,13 +17,13 @@ window_event_handler(root)
 search_entry_var = StringVar()
 
 
-def error_message(arg):
+def search_error_message(arg):
     function = MESSENGER_SWITCH['error']
     function("search error".title(), arg)
 
 
-def search_error_thread(arg):
-    error_thread = Thread(target=error_message, args=(arg,))
+def search_error_message_thread(arg):
+    error_thread = Thread(target=search_error_message, args=(arg,))
     error_thread.start()
     error_thread = None
 
@@ -35,7 +35,7 @@ def search(arg):
         status = results['status']
 
         if not status:
-            search_error_thread(results['error'])
+            search_error_message_thread(results['error'])
 
         return results
 
