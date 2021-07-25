@@ -31,7 +31,7 @@ def search_error_thread(arg):
 def search(arg):
     if arg:
         ws = WebSearcher(arg)
-        results = ws.make_request('head')
+        results = ws.make_request('get')
         status = results['status']
 
         if not status:
