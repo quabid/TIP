@@ -1,6 +1,7 @@
 import requests
+import urllib3
 from urllib.parse import urlparse, urlunparse, urlsplit, urlunsplit, urljoin
-from custom_modules.DialogMessenger import MESSENGER_SWITCH
+
 
 # https://www.youtube.com/results?search_query=wingsuits
 # https://youtu.be/-DCkuvC28mE
@@ -53,6 +54,9 @@ class WebSearcher:
         except requests.exceptions.ConnectionError as ce:
             print(ce)
             return {'error': ce, 'status': False}
+        except urllib3.exceptions.NewConnectionError as nce:
+            print(nce)
+            return {'error': nce, 'status': False}
 
     def display(this):
         if this.url != None:

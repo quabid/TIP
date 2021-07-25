@@ -3,6 +3,7 @@ from threading import Thread
 from queue import Queue
 from custom_modules.index import window_event_handler, cls, be, STATUS_MESSENGER, MESSENGER_SWITCH
 from classes.index import WebSearcher
+from custom_modules.DialogMessenger import MESSENGER_SWITCH
 
 cls()
 
@@ -16,16 +17,27 @@ window_event_handler(root)
 search_entry_var = StringVar()
 
 
+def error_message(arg):
+    function = MESSENGER_SWITCH['error']
+    function("search error".title(), arg)
+
+
+def search_error_thread(arg):
+    error_thread = Thread(target=error_message, args=(arg,))
+    error_thread.start()
+    error_thread = None
+
+
 def search(arg):
     if arg:
         ws = WebSearcher(arg)
-        response = ws.make_request('get')
+        results = ws.make_request('head')
+        status = results['status']
 
-        if response:
-            if response['status']:
-                return response
-            else:
-                return None
+        if not status:
+            search_error_thread(results['error'])
+
+        return results
 
     else:
         message = STATUS_MESSENGER['error']("Missing argument")
@@ -33,7 +45,7 @@ def search(arg):
         return None
 
 
-def init_thread():
+def search_thread():
 
     que = Queue()
 
@@ -45,18 +57,18 @@ def init_thread():
 
     result = que.get()
 
-    if result:        
+    if result:
         if result['status']:
             print("\n\n\t\t\tResults:\t\t{}\n\n".format(result['data'].text))
 
 
 def button_search_handler(event):
-    init_thread()
+    search_thread()
 
 
 def button_keyrelease_handler(event):
     if event.keysym == 'space' or event.keycode == 65:
-        init_thread()
+        search_thread()
 
 
 def clear_entry_on_focusin(event):
