@@ -3,7 +3,6 @@ from threading import Thread
 from queue import Queue
 from custom_modules.index import window_event_handler, cls, be, STATUS_MESSENGER, MESSENGER_SWITCH
 from classes.index import WebSearcher
-from custom_modules.DialogMessenger import MESSENGER_SWITCH
 
 cls()
 
