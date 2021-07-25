@@ -1,15 +1,15 @@
 import requests
+import urllib3
 from urllib.parse import urlparse, urlunparse, urlsplit, urlunsplit, urljoin
-from custom_modules.DialogMessenger import MESSENGER_SWITCH
+
 
 # https://www.youtube.com/results?search_query=wingsuits
-# https: // youtu.be/-DCkuvC28mE
-# https: // jsonplaceholder.typicode.com/todos
-# https: // jsonplaceholder.typicode.com/posts
-# https: // jsonplaceholder.typicode.com/comments
-# https: // jsonplaceholder.typicode.com/photos
-# https: // jsonplaceholder.typicode.com/albums
-
+# https://youtu.be/-DCkuvC28mE
+# https://jsonplaceholder.typicode.com/todos
+# https://jsonplaceholder.typicode.com/posts
+# https://jsonplaceholder.typicode.com/comments
+# https://jsonplaceholder.typicode.com/photos
+# https://jsonplaceholder.typicode.com/albums
 
 
 class WebSearcher:
@@ -33,18 +33,30 @@ class WebSearcher:
         req = this.REQUEST_METHODS[method]
         try:
             if method == 'get':
-                return {'status':True,'data':req(this.url)}
+                return {'status': True, 'data': req(this.url)}
             elif method == 'delete':
-                return {'status':True,'data':req(this.url)}
+                return {'status': True, 'data': req(this.url)}
             elif method == 'head':
-                return {'status':True,'data':req(this.url)}
+                return {'status': True, 'data': req(this.url)}
             elif method == 'options':
-                return {'status':True,'data':req(this.url)}
+                return {'status': True, 'data': req(this.url)}
             else:
-                return {'status':True,'data':req(this.url, data)}
+                return {'status': True, 'data': req(this.url, data)}
         except requests.exceptions.MissingSchema as ms:
-            print(ms)            
-            return {'error':ms,'status':False}
+            print(ms)
+            return {'error': ms, 'status': False}
+        except requests.exceptions.InvalidURL as iu:
+            print(iu)
+            return {'error': iu, 'status': False}
+        except requests.exceptions.InvalidSchema as ins:
+            print(ins)
+            return {'error': ins, 'status': False}
+        except requests.exceptions.ConnectionError as ce:
+            print(ce)
+            return {'error': ce, 'status': False}
+        except urllib3.exceptions.NewConnectionError as nce:
+            print(nce)
+            return {'error': nce, 'status': False}
 
     def display(this):
         if this.url != None:
