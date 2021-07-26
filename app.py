@@ -64,11 +64,14 @@ def search_thread():
         if result['status']:
             content = result['data'].content
             destination = save_content_to_file_requirements()
-            save_results = save_to_file(content, destination)
-            if save_results['status']:
-                print("\n\t{}\n\n".format(save_results['data']))
+            if not None == destination:
+                save_results = save_to_file(content, destination)
+                if save_results['status']:
+                    print("\n\t{}\n\n".format(save_results['data']))
+                else:
+                    save_error_message_thread(save_results['error'])
             else:
-                save_error_message_thread(save_results['error'])
+                return
 
 
 def button_search_handler(event):
