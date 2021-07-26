@@ -3,6 +3,20 @@ import platform
 
 # From the os module
 OS_NAME = os.name
+SEP = os.sep
+ENV = os.environ
+ENVB = os.environb
+CNF_NAMES = os.confstr_names
+CUR_DIR = os.curdir
+EXT_SEP = os.extsep
+PATH_SEP = os.pathsep
+DEF_PATH = os.defpath
+LINE_SEP = os.linesep
+DEV_NULL = os.devnull
+
+
+# os methods
+CPU_COUNT = os.cpu_count()
 
 
 # From the platform module
