@@ -1,7 +1,7 @@
 from tkinter import *
 from threading import Thread
 from queue import Queue
-from custom_modules.index import window_event_handler, save, cls, be, STATUS_MESSENGER, MESSENGER_SWITCH
+from custom_modules.index import window_event_handler, save_to_file, cls, save_content_to_file_requirements, be, STATUS_MESSENGER, MESSENGER_SWITCH
 from classes.index import WebSearcher
 
 cls()
@@ -63,7 +63,8 @@ def search_thread():
     if result:
         if result['status']:
             content = result['data'].content
-            save_results = save(content, "results", ".json", "./downloads")
+            destination = save_content_to_file_requirements()
+            save_results = save_to_file(content, destination)
             if save_results['status']:
                 import os
                 os.system('ls -halt downloads')
