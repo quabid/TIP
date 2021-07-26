@@ -66,8 +66,7 @@ def search_thread():
             destination = save_content_to_file_requirements()
             save_results = save_to_file(content, destination)
             if save_results['status']:
-                import os
-                os.system('ls -halt downloads')
+                print("\n\t{}\n\n".format(save_results['data']))
             else:
                 save_error_message_thread(save_results['error'])
 
