@@ -67,7 +67,7 @@ def search_thread():
             if not None == destination:
                 save_results = save_to_file(content, destination)
                 if save_results['status']:
-                    print("\n\t{}\n\n".format(save_results['data']))
+                    print("\n\t{}\n\n".format(save_results['data'].text))
                 else:
                     save_error_message_thread(save_results['error'])
             else:
